@@ -11,10 +11,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: 700722ca3307aa5d8a9895e98fbf57c6
-          projectName: lifescan-site
-          directory: .
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+        run: npx wrangler@3 pages deploy . --project-name lifescan-site --commit-dirty=true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: 700722ca3307aa5d8a9895e98fbf57c6
