@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LifeScan AI — Radiology AI Validation</title>
+<meta name="description" content="Independent AI validation for radiology departments and hospitals across APAC. Know your AI works." />
+<meta property="og:title" content="LifeScan AI — Radiology AI Validation" />
+<meta property="og:description" content="Independent AI validation for radiology departments and hospitals across APAC." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --teal:#0B6E6E;--teal-dk:#084F4F;--teal-lt:#E6F3F3;
+  --signal:#1A73C8;--signal-dk:#1558A0;
+  --green:#2EAF7D;
+  --bg:#F8FAFB;--white:#FFFFFF;
+  --text:#1C2B36;--muted:#5A6B7A;--grey:#8A9BB0;--line:#E4ECF3;
+  --shadow:0 1px 3px rgba(28,43,54,.06),0 8px 28px rgba(28,43,54,.09);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.6}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:100;background:rgba(248,250,251,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-i{max-width:1140px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:66px}
+.logo{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--teal);font-weight:700;font-size:18px}
+.logo-mark{width:32px;height:32px;background:var(--teal);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-mark svg{color:#fff}
+.nav-links{display:flex;align-items:center;gap:26px}
+.nav-links a{color:var(--text);text-decoration:none;font-size:14px;font-weight:500;opacity:.75;transition:.12s}
+.nav-links a:hover{opacity:1;color:var(--teal)}
+.nav-cta{background:var(--signal);color:#fff!important;padding:9px 20px;border-radius:8px;font-size:14px;font-weight:600;opacity:1!important;transition:.12s!important}
+.nav-cta:hover{background:var(--signal-dk)!important}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(140deg,#041E1E 0%,var(--teal) 55%,#1A4870 100%);color:#fff;padding:96px 24px 110px;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:6px 15px;border-radius:99px;font-size:13px;margin-bottom:32px}
+.hero-badge .dot{width:7px;height:7px;background:var(--green);border-radius:50%;flex:none}
+.hero h1{font-size:clamp(34px,5.5vw,60px);font-weight:700;max-width:820px;margin:0 auto 22px;line-height:1.12;letter-spacing:-.02em}
+.hero p{font-size:clamp(16px,2vw,20px);max-width:580px;margin:0 auto 44px;opacity:.88;line-height:1.75}
+.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-p{background:var(--signal);color:#fff;padding:15px 30px;border-radius:10px;font-weight:600;font-size:16px;text-decoration:none;border:none;cursor:pointer;font-family:inherit;transition:.14s;display:inline-block}
+.btn-p:hover{background:var(--signal-dk)}
+.btn-s{background:rgba(255,255,255,.1);color:#fff;padding:15px 30px;border-radius:10px;font-weight:600;font-size:16px;text-decoration:none;border:1.5px solid rgba(255,255,255,.28);transition:.14s;display:inline-block}
+.btn-s:hover{background:rgba(255,255,255,.18)}
+.hero-sub{margin-top:64px;font-size:13px;opacity:.5;letter-spacing:.03em}
+
+/* ── SHARED SECTION ── */
+.sec{padding:88px 24px}
+.sec-i{max-width:1140px;margin:0 auto}
+.sec-label{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+.sec h2{font-size:clamp(26px,3.5vw,40px);font-weight:700;line-height:1.18;margin-bottom:16px;max-width:640px;letter-spacing:-.01em}
+.sec p.lead{font-size:17px;color:var(--muted);max-width:620px;line-height:1.75;margin-bottom:56px}
+
+/* ── PROBLEM ── */
+.problem{background:var(--white)}
+.prob-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+.prob-card{padding:30px;border:1px solid var(--line);border-radius:14px;transition:.15s}
+.prob-card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+.prob-icon{width:46px;height:46px;background:#FEF0ED;border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.prob-card h3{font-size:17px;font-weight:600;margin-bottom:10px}
+.prob-card p{font-size:14.5px;color:var(--muted);line-height:1.65}
+.cost-tag{display:inline-flex;align-items:center;gap:6px;margin-top:14px;background:#FEF0ED;color:#C0392B;font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:99px}
+
+/* ── SOLUTION ── */
+.solution{background:var(--bg)}
+.sol-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.sol-card{background:var(--white);padding:28px;border-radius:14px;border:1px solid var(--line);box-shadow:var(--shadow)}
+.sol-icon{width:46px;height:46px;background:var(--teal-lt);border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.sol-card h3{font-size:15.5px;font-weight:600;color:var(--teal);margin-bottom:8px}
+.sol-card p{font-size:14px;color:var(--muted);line-height:1.65}
+
+/* ── HOW IT WORKS ── */
+.how{background:var(--white)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:40px}
+.step{position:relative;padding-left:64px}
+.step-num{position:absolute;left:0;top:0;width:46px;height:46px;background:var(--teal);color:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;flex:none}
+.step h3{font-size:17px;font-weight:600;margin-bottom:10px}
+.step p{font-size:14.5px;color:var(--muted);line-height:1.65}
+.step-result{margin-top:44px;padding:22px 24px;background:var(--teal-lt);border-left:3px solid var(--teal);border-radius:0 10px 10px 0;font-size:15px;font-weight:500;color:var(--teal-dk)}
+
+/* ── WHO ── */
+.who-sec{background:var(--bg)}
+.who-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px}
+.who-card{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:32px;box-shadow:var(--shadow)}
+.who-tag{display:inline-block;background:var(--teal-lt);color:var(--teal);font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:99px;margin-bottom:16px}
+.who-card h3{font-size:18px;font-weight:700;margin-bottom:10px}
+.who-card p{font-size:14.5px;color:var(--muted);line-height:1.65}
+
+/* ── APAC ── */
+.apac{background:linear-gradient(140deg,#041E1E 0%,var(--teal) 100%);color:#fff}
+.apac .sec-label{color:var(--green)}
+.apac h2{color:#fff;max-width:100%}
+.apac p.lead{color:rgba(255,255,255,.82)}
+.apac-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.apac-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:22px}
+.apac-card h4{font-size:15px;font-weight:600;margin-bottom:7px}
+.apac-card p{font-size:13.5px;color:rgba(255,255,255,.72);line-height:1.65}
+
+/* ── STATS ── */
+.stats{background:var(--teal-lt);padding:60px 24px}
+.stats-i{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;text-align:center}
+.stat-n{font-size:44px;font-weight:700;color:var(--teal);line-height:1}
+.stat-l{font-size:13px;color:#3A6060;margin-top:7px}
+
+/* ── FORM ── */
+.form-sec{background:var(--bg)}
+.form-wrap{background:var(--white);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:52px;max-width:700px;margin:0 auto}
+.form-wrap .form-hd{text-align:center;margin-bottom:36px}
+.form-wrap .form-hd h2{font-size:30px;font-weight:700;margin-bottom:10px;letter-spacing:-.01em}
+.form-wrap .form-hd p{color:var(--muted);font-size:15px;max-width:46ch;margin:0 auto}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.f-field{margin-bottom:16px}
+.f-field label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px}
+.f-field input,.f-field select,.f-field textarea{width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:9px;font-family:inherit;font-size:14.5px;color:var(--text);background:var(--bg);transition:.14s}
+.f-field input:focus,.f-field select:focus,.f-field textarea:focus{outline:none;border-color:var(--teal);background:#fff}
+.f-field textarea{min-height:76px;resize:vertical}
+.f-field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238A9BB0' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-color:var(--bg);padding-right:36px;cursor:pointer}
+.optional{font-size:11.5px;font-weight:400;color:var(--grey);margin-left:4px}
+.submit-btn{width:100%;background:var(--signal);color:#fff;padding:15px;border-radius:10px;font-size:16px;font-weight:600;border:none;cursor:pointer;font-family:inherit;transition:.14s;margin-top:8px}
+.submit-btn:hover:not(:disabled){background:var(--signal-dk)}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed}
+.f-privacy{font-size:12.5px;color:var(--grey);text-align:center;margin-top:14px}
+.f-success{display:none;text-align:center;padding:52px 24px}
+.f-success .check{width:68px;height:68px;background:#E7F7EF;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 22px}
+.f-success h3{font-size:24px;font-weight:700;margin-bottom:10px;color:var(--teal)}
+.f-success p{color:var(--muted);font-size:15px;max-width:38ch;margin:0 auto}
+.f-err{display:none;background:#FEF0ED;border:1px solid #FACEC6;border-radius:9px;padding:13px 16px;font-size:14px;color:#B03020;margin-top:14px}
+.spinner{display:none;align-items:center;justify-content:center;gap:10px;color:var(--grey);font-size:14px;margin-top:12px}
+.spin{width:18px;height:18px;border:2.5px solid var(--line);border-top-color:var(--signal);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── FOOTER ── */
+footer{background:#041E1E;color:rgba(255,255,255,.65);padding:52px 24px 32px}
+.footer-i{max-width:1140px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:32px}
+.footer-brand{font-size:20px;font-weight:700;color:#fff;margin-bottom:7px}
+.footer-tag{font-size:13px}
+.footer-links{display:flex;gap:22px;flex-wrap:wrap;align-items:center}
+.footer-links a{color:rgba(255,255,255,.6);text-decoration:none;font-size:14px;transition:.12s}
+.footer-links a:hover{color:#fff}
+.footer-bottom{max-width:1140px;margin:28px auto 0;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);font-size:12px;color:rgba(255,255,255,.35);line-height:1.7}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  .nav-links{display:none}
+  .f-row{grid-template-columns:1fr}
+  .form-wrap{padding:28px 18px}
+  .steps{gap:28px}
+  .step{padding-left:0;padding-top:58px}
+  .step-num{top:0;left:0}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-i">
+    <a class="logo" href="#">
+      <div class="logo-mark">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <rect x="3" y="3" width="18" height="18" rx="3"/>
+          <path d="M8 12h8M12 8v8"/>
+          <circle cx="19" cy="5" r="2" fill="#2EAF7D" stroke="none"/>
+        </svg>
+      </div>
+      LifeScan AI
+    </a>
+    <div class="nav-links">
+      <a href="#problem">The Problem</a>
+      <a href="#solution">How It Works</a>
+      <a href="#who">Who It's For</a>
+      <a href="#register" class="nav-cta">Early Access</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="dot"></span>
+    Now accepting APAC early access registrations
+  </div>
+  <h1>AI Radiology Tools Are Only as Good as Their Validation</h1>
+  <p>LifeScan AI is the independent validation layer that gives hospitals confidence before deploying AI diagnostic tools in clinical settings.</p>
+  <div class="hero-ctas">
+    <a href="#register" class="btn-p">Join the Early Access Programme</a>
+    <a href="#solution" class="btn-s">How It Works</a>
+  </div>
+  <p class="hero-sub">BUILT FOR HONG KONG · SINGAPORE · AUSTRALIA · SE ASIA</p>
+</section>
+
+<!-- PROBLEM -->
+<section class="sec problem" id="problem">
+  <div class="sec-i">
+    <div class="sec-label">The Challenge</div>
+    <h2>The AI Confidence Gap in Radiology</h2>
+    <p class="lead">Your hospital has invested in AI diagnostic tools. They're powerful. But every new tool introduces risk: Will it work in your environment? Can you trust it with your patients? How do you validate before deployment?</p>
+    <div class="prob-grid">
+      <div class="prob-card">
+        <div class="prob-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E74C3C" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.3 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.3a2 2 0 0 0-3.4 0z"/></svg>
+        </div>
+        <h3>AI tools vary by environment</h3>
+        <p>US- or EU-trained models frequently underperform on APAC patient populations, local equipment protocols, and regional imaging standards. Lab accuracy ≠ clinical accuracy.</p>
+        <span class="cost-tag">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Delayed AI adoption
+        </span>
+      </div>
+      <div class="prob-card">
+        <div class="prob-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E74C3C" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Hospitals carry all the risk</h3>
+        <p>Vendors provide accuracy claims. Regulators require validation. Radiologists need assurance. There is no independent infrastructure to bridge that gap — until now.</p>
+        <span class="cost-tag">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Liability exposure
+        </span>
+      </div>
+      <div class="prob-card">
+        <div class="prob-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E74C3C" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+        </div>
+        <h3>Radiologists need backup</h3>
+        <p>Clinicians are being asked to trust AI they cannot independently verify. Without a rigorous validation layer, radiologist confidence in AI tools — and patient safety — is at risk.</p>
+        <span class="cost-tag">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Lost competitive advantage
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="sec solution" id="solution">
+  <div class="sec-i">
+    <div class="sec-label">The Solution</div>
+    <h2>Independent AI Validation Infrastructure</h2>
+    <p class="lead">LifeScan AI is the trusted verification layer for hospital-deployed diagnostic AI tools. We don't build diagnostic AI. We validate it — in your environment, against your patients, your protocols.</p>
+    <div class="sol-grid">
+      <div class="sol-card">
+        <div class="sol-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+        </div>
+        <h3>Site-Specific Validation</h3>
+        <p>Test any AI tool against your hospital's imaging data, protocols, and patient demographics — in your environment, not a lab. No clinical workflows disrupted.</p>
+      </div>
+      <div class="sol-card">
+        <div class="sol-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 12l4-4 4 4 4-4"/></svg>
+        </div>
+        <h3>Continuous Performance Monitoring</h3>
+        <p>Validation is not a one-time event. LifeScan provides ongoing monitoring dashboards that flag model drift and performance changes over time.</p>
+      </div>
+      <div class="sol-card">
+        <div class="sol-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg>
+        </div>
+        <h3>Regulatory-Ready Reporting</h3>
+        <p>Generate clinical validation reports aligned with FDA 510(k), CE marking, TGA, and Hong Kong Hospital Authority pathways. Evidence regulators actually accept.</p>
+      </div>
+      <div class="sol-card">
+        <div class="sol-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        </div>
+        <h3>Enterprise Scalability</h3>
+        <p>Validate multiple AI tools across your multi-site hospital network with a single partner engagement. One validation methodology, consistently applied.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec how">
+  <div class="sec-i">
+    <div class="sec-label">Process</div>
+    <h2>Three Steps to Confident AI Deployment</h2>
+    <p class="lead">A structured, repeatable process that delivers validation evidence in weeks — not the months of internal studies.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Integration &amp; Scoping</h3>
+        <p>You provide anonymized imaging datasets from your environment. We integrate your chosen AI tool into our validation platform. We map your imaging protocols, PACS/RIS infrastructure, and clinical workflows. No disruption to live clinical operations.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Blinded Validation Study</h3>
+        <p>We run a rigorous, blinded clinical validation study using your data, your patient demographics, your imaging protocols. Your radiologists review findings independently. Performance metrics emerge from real-world conditions — not lab data.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Regulatory Evidence Package</h3>
+        <p>You receive a comprehensive clinical validation report: performance summaries, confidence intervals, safety assessments, edge case analysis, and failure mode documentation. Built to satisfy FDA, CE, TGA, and HKHA standards.</p>
+      </div>
+    </div>
+    <div class="step-result">
+      Result: You deploy verified AI tools with confidence. Your radiologists know exactly how the tool performs in your specific environment — before it touches a patient.
+    </div>
+  </div>
+</section>
+
+<!-- WHO -->
+<section class="sec who-sec" id="who">
+  <div class="sec-i">
+    <div class="sec-label">Built For</div>
+    <h2>Who LifeScan AI Is For</h2>
+    <p class="lead">Three distinct teams within APAC hospitals need AI validation — and each needs it framed differently.</p>
+    <div class="who-grid">
+      <div class="who-card">
+        <span class="who-tag">Procurement</span>
+        <h3>Hospital Procurement Teams</h3>
+        <p>Stop relying solely on vendor accuracy claims. LifeScan provides independent performance evidence that supports AI purchasing decisions — and satisfies procurement governance requirements. Outcomes-based, site-specific, defensible.</p>
+      </div>
+      <div class="who-card">
+        <span class="who-tag">Clinical</span>
+        <h3>Radiology Departments</h3>
+        <p>A peer-reviewed, independent second opinion on your AI tools. LifeScan validates AI performance against your patient population — so your radiologists can trust what the AI surfaces, and confidently override when needed.</p>
+      </div>
+      <div class="who-card">
+        <span class="who-tag">Technology</span>
+        <h3>Healthcare IT &amp; Innovation Teams</h3>
+        <p>Integrates with existing PACS and RIS systems without disruption. LifeScan provides the technical bridge between AI vendor APIs and your hospital's imaging infrastructure — including API documentation for PACS integration.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APAC -->
+<section class="sec apac">
+  <div class="sec-i">
+    <div class="sec-label">Geography</div>
+    <h2>Built for Asia-Pacific Healthcare</h2>
+    <p class="lead">Diagnostic AI adoption is accelerating across APAC. Hospitals in Hong Kong, Singapore, Australia, Japan, and South Korea are moving fast — but they need validation that respects local regulatory frameworks and clinical practices.</p>
+    <div class="apac-grid">
+      <div class="apac-card">
+        <h4>Local Regulatory Expertise</h4>
+        <p>We understand HKHA, MHRA (UK), TGA (Australia), CE marking (Europe), and FDA pathways — and how they intersect with Hong Kong and APAC regional frameworks.</p>
+      </div>
+      <div class="apac-card">
+        <h4>Regional Imaging Standards</h4>
+        <p>Validate against local imaging protocols, equipment vendors (Siemens, GE, Philips, Canon), and patient populations unique to APAC — not US or EU reference populations.</p>
+      </div>
+      <div class="apac-card">
+        <h4>Radiologist-First Design</h4>
+        <p>Our validation methodology centers radiologist workflow and judgment — not just algorithmic accuracy scores. Clinicians stay in control throughout every validation study.</p>
+      </div>
+      <div class="apac-card">
+        <h4>Enterprise Network Scale</h4>
+        <p>Validate tools across multi-site hospital networks — HK Hospital Authority, IHH, Raffles, Gleneagles, Bumrungrad — with a single, consistent engagement model.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-i">
+    <div>
+      <div class="stat-n">~30%</div>
+      <div class="stat-l">of radiology AI underperforms outside training population</div>
+    </div>
+    <div>
+      <div class="stat-n">4–8 wk</div>
+      <div class="stat-l">typical LifeScan validation study timeline</div>
+    </div>
+    <div>
+      <div class="stat-n">APAC</div>
+      <div class="stat-l">fastest-growing AI radiology market globally</div>
+    </div>
+    <div>
+      <div class="stat-n">0</div>
+      <div class="stat-l">independent APAC-based AI validation platforms today</div>
+    </div>
+  </div>
+</div>
+
+<!-- REGISTER FORM -->
+<section class="sec form-sec" id="register">
+  <div class="sec-i">
+    <div class="form-wrap" id="formWrap">
+      <div class="form-hd">
+        <h2>Join the Early Access Programme</h2>
+        <p>We're working with a small group of APAC hospitals and radiology departments. Register to be part of the first validation cohort.</p>
+      </div>
+      <form id="regForm">
+        <div class="f-row">
+          <div class="f-field">
+            <label for="full_name">Full Name</label>
+            <input id="full_name" name="full_name" type="text" placeholder="Dr. Jane Smith" required />
+          </div>
+          <div class="f-field">
+            <label for="job_title">Job Title</label>
+            <input id="job_title" name="job_title" type="text" placeholder="Chief Radiologist" required />
+          </div>
+        </div>
+        <div class="f-row">
+          <div class="f-field">
+            <label for="organisation">Organisation</label>
+            <input id="organisation" name="organisation" type="text" placeholder="HK Sanatorium & Hospital" required />
+          </div>
+          <div class="f-field">
+            <label for="country">Country</label>
+            <select id="country" name="country" required>
+              <option value="">Select country…</option>
+              <option>Hong Kong</option>
+              <option>Singapore</option>
+              <option>Australia</option>
+              <option>Thailand</option>
+              <option>Malaysia</option>
+              <option>Philippines</option>
+              <option>Indonesia</option>
+              <option>Japan</option>
+              <option>South Korea</option>
+              <option>Taiwan</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="f-field">
+          <label for="email">Work Email</label>
+          <input id="email" name="email" type="email" placeholder="you@hospital.org" required />
+        </div>
+        <div class="f-field">
+          <label for="ai_tools">AI tools currently evaluating <span class="optional">optional</span></label>
+          <input id="ai_tools" name="ai_tools" type="text" placeholder="e.g. Aidoc, Viz.ai, in-house model…" />
+        </div>
+        <div class="f-field">
+          <label for="challenge">Biggest radiology AI challenge <span class="optional">optional</span></label>
+          <textarea id="challenge" name="challenge" placeholder="e.g. Procurement can't approve without independent evidence…"></textarea>
+        </div>
+        <button class="submit-btn" id="submitBtn" type="submit">Register Interest →</button>
+        <div class="spinner" id="spinner"><div class="spin"></div> Submitting…</div>
+        <div class="f-err" id="formErr"></div>
+        <p class="f-privacy">We will not share your details. This is an early access registration, not a commercial commitment.</p>
+      </form>
+      <div class="f-success" id="formSuccess">
+        <div class="check">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2EAF7D" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <h3>You're registered.</h3>
+        <p>We'll be in touch soon. We're working with a small cohort — every registration gets a personal response.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-i">
+    <div>
+      <div class="footer-brand">LifeScan AI</div>
+      <div class="footer-tag">Know your AI works.</div>
+    </div>
+    <div class="footer-links">
+      <a href="#">Home</a>
+      <a href="#solution">How It Works</a>
+      <a href="#who">Who It's For</a>
+      <a href="#register">Early Access</a>
+      <a href="mailto:contact@lifescan.ai">contact@lifescan.ai</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    LifeScan AI is a concept-stage product in active development. Nothing on this site constitutes a clinical recommendation, regulatory approval, or diagnostic opinion. All statistics are indicative estimates based on published research.<br />
+    © 2026 LifeScan AI. All rights reserved.
+  </div>
+</footer>
+
+<script>
+const form = document.getElementById('regForm');
+const btn = document.getElementById('submitBtn');
+const spinner = document.getElementById('spinner');
+const errEl = document.getElementById('formErr');
+const successEl = document.getElementById('formSuccess');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  btn.disabled = true;
+  spinner.style.display = 'flex';
+  errEl.style.display = 'none';
+
+  const data = {
+    full_name: form.full_name.value.trim(),
+    job_title: form.job_title.value.trim(),
+    organisation: form.organisation.value.trim(),
+    country: form.country.value,
+    email: form.email.value.trim(),
+    ai_tools: form.ai_tools.value.trim(),
+    challenge: form.challenge.value.trim(),
+  };
+
+  try {
+    const res = await fetch('/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    const j = await res.json();
+    if (!res.ok) throw new Error(j.error || 'Submission failed.');
+    form.style.display = 'none';
+    successEl.style.display = 'block';
+    document.querySelector('.form-hd').style.display = 'none';
+  } catch (err) {
+    errEl.textContent = err.message || 'Something went wrong. Please email us directly at contact@lifescan.ai';
+    errEl.style.display = 'block';
+    btn.disabled = false;
+  } finally {
+    spinner.style.display = 'none';
+  }
+});
+</script>
+
+</body>
+</html>
