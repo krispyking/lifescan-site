@@ -1,12 +1,12 @@
 // Cloudflare Pages Function — POST /api/register
-// Saves early access registrations to Notion under the LifeScan Agent Workspace.
-// Secrets (CF Pages): NOTION_TOKEN
-// Optional: LIFESCAN_WORKSPACE_ID (defaults to the known workspace page ID)
+// Saves early access registrations to Notion + HubSpot.
+// Secrets (CF Pages): NOTION_TOKEN, HUBSPOT_TOKEN
+// HubSpot private app needs scopes: crm.objects.contacts.write
 
 const NOTION_VERSION = '2022-06-28';
 const NOTION_API = 'https://api.notion.com/v1';
-// LifeScan Agent Workspace page — registrations are appended as child pages
 const WORKSPACE_ID = '32028547-eaa7-8126-a69a-ed9edd706788';
+const HUBSPOT_API = 'https://api.hubapi.com';
 
 const COUNTRIES = [
   'Hong Kong','Singapore','Australia','Thailand','Malaysia',
@@ -18,6 +18,43 @@ function json(body, status = 200) {
     status,
     headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
   });
+}
+
+async function pushToHubSpot(token, { full_name, job_title, organisation, country, email, ai_tools, challenge }) {
+  const nameParts = full_name.trim().split(/\s+/);
+  const firstname = nameParts[0] || full_name;
+  const lastname = nameParts.slice(1).join(' ') || '';
+
+  const properties = {
+    email,
+    firstname,
+    lastname,
+    jobtitle: job_title,
+    company: organisation,
+    country,
+    hs_lead_status: 'NEW',
+    ...(ai_tools ? { message: `AI tools evaluating: ${ai_tools}` } : {}),
+  };
+
+  const resp = await fetch(`${HUBSPOT_API}/crm/v3/objects/contacts`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ properties }),
+  });
+
+  if (!resp.ok) {
+    const body = await resp.text();
+    // 409 = contact already exists — not an error we care about
+    if (resp.status === 409) return { ok: true, existing: true };
+    console.error('[HubSpot] contact create failed:', resp.status, body);
+    return { ok: false, status: resp.status, body };
+  }
+
+  const data = await resp.json();
+  return { ok: true, id: data.id };
 }
 
 export async function onRequestPost({ request, env }) {
@@ -45,7 +82,8 @@ export async function onRequestPost({ request, env }) {
   const now = new Date().toISOString();
   const pageTitle = `Registration: ${full_name} — ${organisation} (${country})`;
 
-  const body = {
+  // ── Notion ──────────────────────────────────────────────────────────────────
+  const notionBody = {
     parent: { type: 'page_id', page_id: WORKSPACE_ID },
     properties: {
       title: { title: [{ text: { content: pageTitle } }] },
@@ -77,20 +115,27 @@ export async function onRequestPost({ request, env }) {
     ],
   };
 
-  const resp = await fetch(`${NOTION_API}/pages`, {
+  const notionResp = await fetch(`${NOTION_API}/pages`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${env.NOTION_TOKEN}`,
       'Notion-Version': NOTION_VERSION,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(notionBody),
   });
 
-  if (!resp.ok) {
-    const err = await resp.text();
-    console.error('Notion error:', err);
-    return json({ error: 'Registration saved but confirmation failed. Please email contact@lifescan.ai if you do not hear from us.' }, 502);
+  if (!notionResp.ok) {
+    const err = await notionResp.text();
+    console.error('[Notion] page create failed:', err);
+    return json({ error: 'Registration could not be saved. Please email contact@lifescan.ai directly.' }, 502);
+  }
+
+  // ── HubSpot (best-effort — never blocks the registration) ───────────────────
+  if (env.HUBSPOT_TOKEN) {
+    pushToHubSpot(env.HUBSPOT_TOKEN, { full_name, job_title, organisation, country, email, ai_tools, challenge })
+      .then(r => console.log('[HubSpot]', JSON.stringify(r)))
+      .catch(e => console.error('[HubSpot] unexpected error:', e));
   }
 
   return json({ ok: true, message: 'Registration received. We will be in touch soon.' });
