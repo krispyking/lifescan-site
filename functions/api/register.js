@@ -8,7 +8,7 @@ const WORKSPACE_ID   = '32028547-eaa7-8126-a69a-ed9edd706788';
 const HUBSPOT_API    = 'https://api.hubapi.com';
 const RESEND_API     = 'https://api.resend.com/emails';
 const SLACK_CHANNEL  = 'C0AS2HDNSJC'; // #proj-lifescan
-const FROM_ADDRESS   = 'LifeScan AI <noreply@eumeluuent.resend.app>';
+const FROM_ADDRESS   = 'LifeScan <chris@lifescan.krispyking.com>';
 const REPLY_TO       = ['lifescanai@gmail.com'];
 
 const COUNTRIES = [
