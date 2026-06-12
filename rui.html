@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LifeScan AI — Discussion with Rui</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --teal:#0B6E6E;--teal-dk:#084F4F;--teal-lt:#E6F3F3;
+  --signal:#1A73C8;--signal-dk:#1558A0;
+  --green:#2EAF7D;
+  --bg:#F8FAFB;--white:#FFFFFF;
+  --text:#1C2B36;--muted:#5A6B7A;--grey:#8A9BB0;--line:#E4ECF3;
+  --shadow:0 1px 3px rgba(28,43,54,.06),0 8px 28px rgba(28,43,54,.09);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.6}
+
+/* ── HEADER ── */
+header{background:var(--teal);padding:18px 24px}
+.hdr-i{max-width:740px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:9px;text-decoration:none;color:#fff;font-weight:700;font-size:17px}
+.logo-mark{width:30px;height:30px;background:rgba(255,255,255,.15);border-radius:7px;display:flex;align-items:center;justify-content:center}
+.logo-mark svg{color:#fff}
+.hdr-tag{font-size:12px;color:rgba(255,255,255,.6);letter-spacing:.04em}
+.green-bar{height:4px;background:var(--green)}
+
+/* ── HERO INTRO ── */
+.intro{background:var(--white);border-bottom:1px solid var(--line);padding:44px 24px 40px}
+.intro-i{max-width:740px;margin:0 auto}
+.intro-tag{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+.intro h1{font-size:clamp(22px,3vw,30px);font-weight:700;line-height:1.2;margin-bottom:16px;letter-spacing:-.01em}
+.intro p{font-size:16px;color:var(--muted);line-height:1.75;max-width:60ch}
+.intro p+p{margin-top:10px}
+
+/* ── CONTACT STRIP ── */
+.contact-strip{background:var(--teal-lt);border-bottom:1px solid var(--line);padding:22px 24px}
+.contact-strip-i{max-width:740px;margin:0 auto}
+.contact-strip h3{font-size:13px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.c-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.c-field label{display:block;font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:5px}
+.c-field input{width:100%;padding:10px 13px;border:1.5px solid var(--line);border-radius:8px;font-family:inherit;font-size:14px;color:var(--text);background:#fff;transition:.14s}
+.c-field input:focus{outline:none;border-color:var(--teal);background:#fff}
+
+/* ── FORM BODY ── */
+.form-body{max-width:740px;margin:0 auto;padding:0 24px 80px}
+
+/* ── SECTION ── */
+.sec-block{margin-top:40px}
+.sec-hdr{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.sec-num{width:34px;height:34px;background:var(--teal);color:#fff;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex:none}
+.sec-title{font-size:17px;font-weight:700;color:var(--text)}
+.sec-divider{height:1px;background:var(--line);margin-bottom:20px}
+
+/* ── QUESTION ── */
+.q-block{margin-bottom:22px}
+.q-label{font-size:14.5px;font-weight:500;color:var(--text);margin-bottom:8px;line-height:1.5}
+.q-label .q-num{color:var(--teal);font-weight:700;margin-right:4px}
+textarea.q-input{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:9px;font-family:inherit;font-size:14.5px;color:var(--text);background:#fff;resize:vertical;min-height:88px;transition:.14s;line-height:1.6}
+textarea.q-input:focus{outline:none;border-color:var(--teal);background:#fff}
+textarea.q-input::placeholder{color:var(--grey);font-style:italic}
+
+/* ── SUBMIT ── */
+.submit-wrap{margin-top:44px;padding:32px;background:var(--white);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.submit-wrap h3{font-size:17px;font-weight:700;margin-bottom:8px}
+.submit-wrap p{font-size:14px;color:var(--muted);margin-bottom:22px;line-height:1.65}
+.submit-btn{background:var(--signal);color:#fff;padding:14px 32px;border-radius:10px;font-size:15px;font-weight:600;border:none;cursor:pointer;font-family:inherit;transition:.14s}
+.submit-btn:hover:not(:disabled){background:var(--signal-dk)}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed}
+.spinner{display:none;align-items:center;gap:9px;color:var(--grey);font-size:14px;margin-top:12px}
+.spin{width:17px;height:17px;border:2.5px solid var(--line);border-top-color:var(--signal);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.f-err{display:none;background:#FEF0ED;border:1px solid #FACEC6;border-radius:9px;padding:12px 15px;font-size:14px;color:#B03020;margin-top:14px}
+
+/* ── SUCCESS ── */
+#successView{display:none;max-width:740px;margin:0 auto;padding:80px 24px;text-align:center}
+.check-circle{width:72px;height:72px;background:#E7F7EF;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px}
+#successView h2{font-size:26px;font-weight:700;margin-bottom:12px;color:var(--teal)}
+#successView p{font-size:16px;color:var(--muted);max-width:44ch;margin:0 auto;line-height:1.75}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--line);padding:20px 24px;text-align:center;font-size:12px;color:var(--grey)}
+footer a{color:var(--teal);text-decoration:none}
+
+@media(max-width:600px){
+  .c-row{grid-template-columns:1fr}
+  .submit-wrap{padding:22px 18px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-i">
+    <a class="logo" href="https://lifescan.krispyking.com">
+      <div class="logo-mark">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <rect x="3" y="3" width="18" height="18" rx="3"/>
+          <circle cx="19" cy="5" r="2" fill="#2EAF7D" stroke="none"/>
+          <path d="M8 12h8M12 8v8"/>
+        </svg>
+      </div>
+      LifeScan AI
+    </a>
+    <span class="hdr-tag">PRIVATE · FOR RUI ONLY</span>
+  </div>
+</header>
+<div class="green-bar"></div>
+
+<div id="formView">
+
+  <!-- Intro -->
+  <div class="intro">
+    <div class="intro-i">
+      <div class="intro-tag">Discovery Interview</div>
+      <h1>Hi Rui — thanks for making time.</h1>
+      <p>I'm building LifeScan AI — an independent AI validation layer for radiology departments across APAC. Before building anything, I want to understand how things actually work on the ground.</p>
+      <p>These questions are about your experience — not a pitch, not a test. Answer as much or as little as you like. You can skip any question. I'll read every word.</p>
+    </div>
+  </div>
+
+  <!-- Contact strip -->
+  <div class="contact-strip">
+    <div class="contact-strip-i">
+      <h3>A few details first</h3>
+      <div class="c-row">
+        <div class="c-field">
+          <label for="full_name">Your name</label>
+          <input id="full_name" name="full_name" type="text" placeholder="Rui…" />
+        </div>
+        <div class="c-field">
+          <label for="email">Work email <span style="color:#C0392B">*</span></label>
+          <input id="email" name="email" type="email" placeholder="you@hospital.org" required />
+        </div>
+        <div class="c-field">
+          <label for="job_title">Title / role</label>
+          <input id="job_title" name="job_title" type="text" placeholder="e.g. Chief Radiologist" />
+        </div>
+        <div class="c-field">
+          <label for="organisation">Organisation</label>
+          <input id="organisation" name="organisation" type="text" placeholder="Hospital or institution" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Questions -->
+  <form id="ruiForm">
+  <div class="form-body">
+
+    <!-- Section 1 -->
+    <div class="sec-block">
+      <div class="sec-hdr">
+        <div class="sec-num">1</div>
+        <div class="sec-title">Clinical Workflow</div>
+      </div>
+      <div class="sec-divider"></div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">1.1</span> How does your department currently receive and queue radiology studies? What does a typical day look like?</div>
+        <textarea class="q-input" name="q1_1" placeholder="Take your time — any detail is useful…"></textarea>
+      </div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">1.2</span> Where do you see the biggest bottlenecks — triage, reporting, or follow-up?</div>
+        <textarea class="q-input" name="q1_2" placeholder=""></textarea>
+      </div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">1.3</span> Have you evaluated or deployed any AI diagnostic tools? What was your experience?</div>
+        <textarea class="q-input" name="q1_3" placeholder="Vendor names, what worked, what didn't…"></textarea>
+      </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="sec-block">
+      <div class="sec-hdr">
+        <div class="sec-num">2</div>
+        <div class="sec-title">AI Validation &amp; Trust</div>
+      </div>
+      <div class="sec-divider"></div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">2.1</span> What would it take for you to trust an AI tool enough to use it in a clinical setting?</div>
+        <textarea class="q-input" name="q2_1" placeholder=""></textarea>
+      </div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">2.2</span> Who in your organisation has to sign off before an AI tool is used — and what evidence do they require?</div>
+        <textarea class="q-input" name="q2_2" placeholder="e.g. CMO, ethics board, IT security, procurement…"></textarea>
+      </div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">2.3</span> Have you ever seen an AI tool perform differently in your environment than the vendor claimed?</div>
+        <textarea class="q-input" name="q2_3" placeholder="If you can share any detail, that's exactly what we need to understand…"></textarea>
+      </div>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="sec-block">
+      <div class="sec-hdr">
+        <div class="sec-num">3</div>
+        <div class="sec-title">The Validation Problem</div>
+      </div>
+      <div class="sec-divider"></div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">3.1</span> When you adopt a new AI tool, who currently runs the validation study — internal IT, the vendor, or an external party?</div>
+        <textarea class="q-input" name="q3_1" placeholder=""></textarea>
+      </div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">3.2</span> What is your current process for monitoring AI performance over time once deployed?</div>
+        <textarea class="q-input" name="q3_2" placeholder=""></textarea>
+      </div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">3.3</span> Would having independent, regulatory-grade validation change your confidence in deploying AI tools?</div>
+        <textarea class="q-input" name="q3_3" placeholder=""></textarea>
+      </div>
+    </div>
+
+    <!-- Section 4 -->
+    <div class="sec-block">
+      <div class="sec-hdr">
+        <div class="sec-num">4</div>
+        <div class="sec-title">Procurement &amp; Priorities</div>
+      </div>
+      <div class="sec-divider"></div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">4.1</span> What is the typical budget cycle for new clinical software in your department?</div>
+        <textarea class="q-input" name="q4_1" placeholder="Annual, ad hoc, capex vs opex…"></textarea>
+      </div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">4.2</span> Is procurement driven from the radiology department, IT, or hospital administration?</div>
+        <textarea class="q-input" name="q4_2" placeholder=""></textarea>
+      </div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">4.3</span> What would make LifeScan AI easy — or hard — to bring to your procurement team?</div>
+        <textarea class="q-input" name="q4_3" placeholder=""></textarea>
+      </div>
+    </div>
+
+    <!-- Section 5 -->
+    <div class="sec-block">
+      <div class="sec-hdr">
+        <div class="sec-num">5</div>
+        <div class="sec-title">APAC &amp; Hong Kong Specifics</div>
+      </div>
+      <div class="sec-divider"></div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">5.1</span> How does the HKHA regulatory environment affect your decisions around AI adoption?</div>
+        <textarea class="q-input" name="q5_1" placeholder=""></textarea>
+      </div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">5.2</span> Are there APAC-specific patient population differences that concern you when evaluating AI tools trained on Western datasets?</div>
+        <textarea class="q-input" name="q5_2" placeholder=""></textarea>
+      </div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">5.3</span> Which other hospitals or departments in HK / APAC are you aware of that are actively deploying radiology AI?</div>
+        <textarea class="q-input" name="q5_3" placeholder="Names, regions, anything you've heard…"></textarea>
+      </div>
+    </div>
+
+    <!-- Section 6 -->
+    <div class="sec-block">
+      <div class="sec-hdr">
+        <div class="sec-num">6</div>
+        <div class="sec-title">Open Feedback</div>
+      </div>
+      <div class="sec-divider"></div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">6.1</span> What's missing from the LifeScan AI concept as you understand it?</div>
+        <textarea class="q-input" name="q6_1" placeholder="Honest feedback is the most useful thing you can give us…"></textarea>
+      </div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">6.2</span> What would make this a must-have vs a nice-to-have for your department?</div>
+        <textarea class="q-input" name="q6_2" placeholder=""></textarea>
+      </div>
+      <div class="q-block">
+        <div class="q-label"><span class="q-num">6.3</span> Who else should we be talking to?</div>
+        <textarea class="q-input" name="q6_3" placeholder="Names, roles, institutions — any introductions are appreciated…"></textarea>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-wrap">
+      <h3>That's everything — thanks, Rui.</h3>
+      <p>Hit submit and your answers go straight to Chris at LifeScan. You'll get a copy by email. He'll reply personally within 24 hours.</p>
+      <button class="submit-btn" id="submitBtn" type="submit">Send my answers →</button>
+      <div class="spinner" id="spinner"><div class="spin"></div> Sending…</div>
+      <div class="f-err" id="formErr"></div>
+    </div>
+
+  </div>
+  </form>
+
+</div><!-- /formView -->
+
+<!-- Success -->
+<div id="successView">
+  <div class="check-circle">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#2EAF7D" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+  </div>
+  <h2>Received. Thank you, Rui.</h2>
+  <p>Chris will read your answers and reply personally. Check your inbox — a copy is on its way.</p>
+</div>
+
+<footer>
+  <a href="https://lifescan.krispyking.com">LifeScan AI</a> &nbsp;·&nbsp; lifescan.krispyking.com &nbsp;·&nbsp; Private page — not for distribution
+</footer>
+
+<script>
+const form   = document.getElementById('ruiForm');
+const btn    = document.getElementById('submitBtn');
+const spin   = document.getElementById('spinner');
+const errEl  = document.getElementById('formErr');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim();
+  if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    errEl.textContent = 'Please enter a valid work email so we can send you a copy.';
+    errEl.style.display = 'block';
+    document.getElementById('email').focus();
+    return;
+  }
+  btn.disabled = true;
+  spin.style.display = 'flex';
+  errEl.style.display = 'none';
+
+  const fd = new FormData(form);
+  const data = {
+    full_name:    document.getElementById('full_name').value.trim(),
+    email,
+    job_title:    document.getElementById('job_title').value.trim(),
+    organisation: document.getElementById('organisation').value.trim(),
+  };
+  for (const [k, v] of fd.entries()) data[k] = v.trim();
+
+  try {
+    const res = await fetch('/api/rui-submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    const j = await res.json();
+    if (!res.ok) throw new Error(j.error || 'Submission failed.');
+    document.getElementById('formView').style.display = 'none';
+    document.getElementById('successView').style.display = 'block';
+    window.scrollTo(0, 0);
+  } catch (err) {
+    errEl.textContent = err.message || 'Something went wrong. Please email chris@lifescan.krispyking.com directly.';
+    errEl.style.display = 'block';
+    btn.disabled = false;
+  } finally {
+    spin.style.display = 'none';
+  }
+});
+</script>
+</body>
+</html>
